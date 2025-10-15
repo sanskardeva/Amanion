@@ -20,24 +20,24 @@ function App() {
   return (
     <div className="App">
       <div className="App-header">
-        <h1>Amazon Web Scraper</h1>
-      </div>
-      <div className="App-body">
-        <h2 className="App-cta">
-          <i>What are you looking for?</i>
-        </h2>
+        <h1 className="App-title">Amazon Web Scraper</h1>
+        <div className="App-body">
+          <h2 className="App-cta">
+            <i>What are you looking for?</i>
+          </h2>
 
-        <div className="search-box">
-          <input
-            type="text"
-            placeholder="Enter product category"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={handleKeyDown}
-          />
-          <button onClick={handleSearch}>
-            <FiSearch />
-          </button>
+          <div className="search-box">
+            <input
+              type="text"
+              placeholder="Ask me"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            <button onClick={handleSearch}>
+              <FiSearch />
+            </button>
+          </div>
         </div>
       </div>
     </div>
