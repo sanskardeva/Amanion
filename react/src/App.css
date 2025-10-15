@@ -15,8 +15,9 @@
   padding-top: 2.5vh;
 
   /* glowing Amazon-style dot */
-  background-image: radial-gradient(circle at 10% 15%, rgba(255, 153, 0, 0.25) 0%, rgba(255, 153, 0, 0) 1%), radial-gradient(circle at 60% 15%, rgba(255, 153, 0, 0.25) 0%, rgba(255, 153, 0, 0) 1%);
-  background-repeat: no-repeat;
+  background-image: radial-gradient(circle at 10% 15%, rgba(255, 153, 0, 0.25) 0%, rgba(255, 153, 0, 0) 2%), radial-gradient(circle at 70% 25%, rgba(37, 99, 235, 0.25) 0%, rgba(37, 99, 235, 0) 2%),
+    radial-gradient(circle at 30% 70%, rgba(255, 153, 0, 0.2) 0%, rgba(255, 153, 0, 0) 2%), radial-gradient(circle at 85% 60%, rgba(37, 99, 235, 0.2) 0%, rgba(37, 99, 235, 0) 2%);
+
   background-size: 150% 150%; /* smaller so it doesn’t go offscreen */
 
   animation: moveGlow 15s infinite alternate;
@@ -96,17 +97,19 @@
 }
 
 .search-box {
+  position: relative; /* fixes layering */
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 0rem;
   width: 100%;
+  z-index: 1;
 }
 
 .search-box input {
   width: 480px;
   max-width: 90%;
-  padding: 1.25rem 2.5rem;
+  padding: 1.25rem 3.5rem;
   border: 1px solid #e5e7eb;
   border-radius: 2rem;
   background-color: #ffffff;
@@ -115,6 +118,8 @@
   outline: none;
   transition: all 0.2s ease;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 2;
 }
 
 .search-box input::placeholder {
@@ -143,4 +148,34 @@
 
 .search-box button:hover {
   color: #1e40af;
+}
+
+.search-box::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 550px;
+  height: 130px;
+  background-image: radial-gradient(circle at 25% 50%, rgba(255, 153, 0, 0.125) 0%, rgba(255, 153, 0, 0) 60%), radial-gradient(circle at 75% 50%, rgba(37, 99, 235, 0.125) 0%, rgba(37, 99, 235, 0) 60%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  filter: blur(50px);
+  opacity: 0.9;
+  animation: floatSearchGlow 12s ease-in-out infinite alternate;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes floatSearchGlow {
+  0% {
+    background-position: 40% 50%, 60% 50%;
+  }
+  50% {
+    background-position: 45% 52%, 55% 48%;
+  }
+  100% {
+    background-position: 40% 50%, 60% 50%;
+  }
 }
