@@ -30,8 +30,10 @@ async def main():
 
     product_schema = {
         "name": "AmazonProduct",
-        "baseSelector": "body",
+        "baseSelector": "html",
         "fields": [
+            {"name": "url", "selector": "link[rel='canonical']", "type": "attribute", "attribute": "href"},
+            {"name": "image_url", "selector": "#landingImage", "type": "attribute", "attribute": "src"},
             {"name": "title", "selector": "#productTitle", "type": "text"},
             {"name": "reviews", "selector": "#acrPopover .a-icon-alt", "type": "text"},
             {"name": "price", "selector": ".a-price .a-offscreen", "type": "text"},
