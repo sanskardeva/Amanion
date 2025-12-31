@@ -2,6 +2,7 @@
   background-color: #f9fafb;
   padding-bottom: 40px;
   font-family: "Inter", sans-serif;
+  min-height: 100vh;
 }
 
 .App-header {
@@ -9,20 +10,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* top-aligned */
+  justify-content: flex-start;
   width: 100%;
-  min-height: 100vh;
   padding-top: 2.5vh;
 
   /* glowing Amazon-style dot */
   background-image: radial-gradient(circle at 10% 15%, rgba(255, 153, 0, 0.25) 0%, rgba(255, 153, 0, 0) 1%), radial-gradient(circle at 60% 15%, rgba(255, 153, 0, 0.25) 0%, rgba(255, 153, 0, 0) 1%);
   background-repeat: no-repeat;
-  background-size: 150% 150%; /* smaller so it doesn’t go offscreen */
-
+  background-size: 150% 150%;
   animation: moveGlow 15s infinite alternate;
 }
 
-/* animate the dot’s position within safe bounds */
 @keyframes moveGlow {
   0% {
     background-position: 10% 15%;
@@ -42,71 +40,45 @@
 }
 
 .App-body {
-  padding: 15vh;
-}
-
-/* Make header content appear above the glow */
-.App-header h1 {
-  position: relative;
-  z-index: 1;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-body {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* align items from top */
-  margin-top: 6rem; /* adjust this to move content higher or lower */
+  justify-content: flex-start;
+  margin-top: 6rem;
   width: 100%;
   text-align: center;
+  z-index: 2; /* Ensures content is clickable above the glow */
 }
 
-.App-link {
-  color: #61dafb;
+.App-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.05rem;
+  margin-bottom: 0.5rem;
 }
 
 .App-cta {
   font-weight: 500;
   font-size: 1.5rem;
+  color: #4b5563;
 }
 
-.search-box {
-  margin-top: 10rem;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
+/* SEARCH BOX */
 .search-box {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 2rem;
   width: 100%;
+  position: relative;
 }
 
 .search-box input {
   width: 480px;
   max-width: 90%;
-  padding: 1.25rem 2.5rem;
+  padding: 1.25rem 3.5rem 1.25rem 2.5rem; /* Extra padding right for button */
   border: 1px solid #e5e7eb;
   border-radius: 2rem;
   background-color: #ffffff;
@@ -114,7 +86,7 @@
   color: #111827;
   outline: none;
   transition: all 0.2s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .search-box input::placeholder {
@@ -130,17 +102,152 @@
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
-/* Optional search button (right-aligned like ChatGPT's “send” icon) */
 .search-box button {
-  margin-left: -3.2rem; /* overlaps slightly inside the input */
+  position: absolute;
+  /* Adjusted to sit perfectly inside the input */
+  right: 38.5rem;
   background-color: transparent;
   border: none;
   cursor: pointer;
   color: #2563eb;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   transition: color 0.2s ease;
+  display: flex;
 }
 
 .search-box button:hover {
   color: #1e40af;
+}
+
+/* =========================================
+   NEW STYLES FOR RESULTS (CARDS)
+   ========================================= */
+
+.results-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 60px auto 0; /* Spacing from search box */
+  padding: 0 20px;
+}
+
+.loading-text {
+  font-size: 1.25rem;
+  color: #6b7280;
+  margin-top: 2rem;
+}
+
+/* Grid Layout */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+/* Card Styling */
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.5rem; /* Matches your input roundness */
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.card-image {
+  height: 220px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.card-image img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.5;
+
+  /* Truncate text after 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; /* Pushes details to bottom of content area */
+  padding-bottom: 1rem;
+}
+
+.card-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.card-rating {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #f59e0b; /* Amber/Gold for stars */
+  background-color: #fffbeb;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.card-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: #2563eb; /* Matches your search icon blue */
+  color: white;
+  padding: 0.75rem;
+  text-decoration: none;
+  border-radius: 1rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+  align-self: center;
+}
+
+.card-btn:hover {
+  background-color: #1d4ed8;
+}
+
+/* Media Query for Mobile */
+@media (max-width: 600px) {
+  .search-box button {
+    margin-left: auto;
+    right: 1.5rem;
+  }
 }
